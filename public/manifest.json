@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CDSS | Patient",
+  "name": "CDSS | Patient Reporting Application",
   "icons": [
     {
       "src": "favicon.ico",
