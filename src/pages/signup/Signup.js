@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const Signup = () => {
   const [mRNNumber, setMRNNumber] = useState("");
@@ -21,7 +22,23 @@ const Signup = () => {
         uuid: uuid,
       };
       console.log("data :>> ", data);
-      window.location.reload(false);
+      axios
+        .post("http://127.0.0.1:5000/signup", {
+          mRNNumber: mRNNumber,
+          ic: ic,
+        })
+        .then(function (response) {
+          console.log("Response: " + response);
+          if (response.status === 404) {
+            localStorage.removeItem("CDSS-Patient-UUID");
+          }
+          window.location.reload();
+        })
+        .catch(function (error) {
+          console.log(error);
+          localStorage.removeItem("CDSS-Patient-UUID");
+          window.location.reload();
+        });
     }
   };
   return (
@@ -56,7 +73,7 @@ const Signup = () => {
       />
       <TextField
         style={{ margin: 10 }}
-        label="Password"
+        label="MRN Number"
         type="password"
         variant="outlined"
         value={mRNNumber}
