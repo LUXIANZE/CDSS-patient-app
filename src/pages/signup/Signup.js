@@ -16,6 +16,7 @@ const Signup = () => {
     } else {
       const uuid = uuidv4();
       localStorage.setItem("CDSS-Patient-UUID", uuid);
+      localStorage.setItem("MRN", mRNNumber);
       const data = {
         ic: ic,
         mRNNumber: mRNNumber,
@@ -23,7 +24,7 @@ const Signup = () => {
       };
       console.log("data :>> ", data);
       axios
-        .post("http://127.0.0.1:5000/signup", {
+        .post("https://cdss-flask-backed.et.r.appspot.com/signup", {
           mRNNumber: mRNNumber,
           ic: ic,
         })
@@ -31,12 +32,14 @@ const Signup = () => {
           console.log("Response: " + response);
           if (response.status === 404) {
             localStorage.removeItem("CDSS-Patient-UUID");
+            localStorage.removeItem("MRN");
           }
           window.location.reload();
         })
         .catch(function (error) {
           console.log(error);
           localStorage.removeItem("CDSS-Patient-UUID");
+          localStorage.removeItem("MRN");
           window.location.reload();
         });
     }
